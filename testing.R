@@ -1,4 +1,4 @@
-# MAIN TEST
+## MAIN TESTING
 
 ### Estimation
 
@@ -28,7 +28,7 @@ head(sim_test[, c("origin","destination","clock")])
 
 
 
-# UTILITY/HELPER TESTS
+## UTILITY/HELPER TESTS
 
 ### Simulation
 
