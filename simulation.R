@@ -80,8 +80,8 @@ Sim_station_pair <- function(hourly_rates, origin, destination) {
     origin = rep(origin, length(accepted)),
     destination = rep(destination, length(accepted)))) }
 
-Sim_station_pair(rep(0, 24), "A", "B") # test for sim_station_pair
-Sim_station_pair(rep(1, 24), "A", "B")  # test for sim_station_pair
+#Sim_station_pair(rep(0, 24), "A", "B") # test for sim_station_pair
+#Sim_station_pair(rep(1, 24), "A", "B")  # test for sim_station_pair
 
 rates_test <- c(0, 0, 10, 0, 0) # testing for lambda max (lambda max = 10 at hr 2)
 Sim_station_pair(rates_test, "A", "B")

@@ -82,16 +82,13 @@ print(arrival_rates, n = 10)
 
 
 
-
-# ESTIMATION TESTING: 
+# test 
 estimation_sim <- data.frame(
-  start_time = c("2022-02-15 01:10:00", "2024-02-15 01:20:00"),
-  end_time = c("2022-02-15 01:30:00", "2022-02-15 01:40:00"),
-  start_station = c("A", "B"),
-  end_station = c("B", "A")) 
+  start_time = c("2024-01-01 07:00:00", "2024-01-02 10:00:00"),
+  end_time = c("2024-01-01 07:30:00", "2024-01-02 10:30:00"),
+  start_station = c("C", "A"),
+  end_station = c("A", "C")) 
 
-estimation_test_results <- estimate_arrival_rates(estimation_sim)
-print(estimation_test_results)
-
+estimate_arrival_rates(estimation_sim)
 
 
