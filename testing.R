@@ -1,4 +1,4 @@
-## MAIN TESTING
+## MAIN TESTS
 
 ### Estimation
 
