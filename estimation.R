@@ -80,3 +80,18 @@ arrival_rates <- estimate_arrival_rates(bike_data)
 # View the results
 print(arrival_rates, n = 10)
 
+
+
+
+# ESTIMATION TESTING: 
+estimation_sim <- data.frame(
+  start_time = c("2022-02-15 01:10:00", "2024-02-15 01:20:00"),
+  end_time = c("2022-02-15 01:30:00", "2022-02-15 01:40:00"),
+  start_station = c("A", "B"),
+  end_station = c("B", "A")) 
+
+estimation_test_results <- estimate_arrival_rates(estimation_sim)
+print(estimation_test_results)
+
+
+
