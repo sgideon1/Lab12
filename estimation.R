@@ -4,6 +4,12 @@ library(dplyr)
 library(tidyr)
 library(lubridate)
 
+#' @Description Estimates hourly arrival rates between bike stations
+#' @param data dataframe with columns start time, end time, start station 
+#' and end station
+#' @return dataframe with columns start station, end station, hour, 
+#' avg trips, avg availability, and estimated arrival rates (mu_hat)
+
 estimate_arrival_rates <- function(data) {
   data <- data %>%
     mutate(
