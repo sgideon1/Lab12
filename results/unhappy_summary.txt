@@ -1,0 +1,4 @@
+"fleet_size" "avg_unhappy"
+50 131.2
+100 50.4
+150 18.4
