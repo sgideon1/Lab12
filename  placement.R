@@ -1,4 +1,8 @@
 #####OPTIMIZATION###############################################################
+
+source("estimation")
+source("simulation")
+
 set.seed(123)
 n_days <- 5
 demand_list <- lapply(seq_len(n_days), function(d) Sim_full_day(arrival_rates))
@@ -106,3 +110,52 @@ results <- lapply(fleet_sizes, function(K) {
 })
 names(results) <- paste0("K", fleet_sizes)
 results
+
+
+###### Final table summaries and plots
+
+## table summarizing average number of unhappy indiviudals according to fleet size
+
+unhappy_summary <- data.frame(
+  fleet_size = fleet_sizes,
+  avg_unhappy = sapply(results, function(x) tail(x$avg_unhappy, 1)))
+print(unhappy_summary)
+
+## table summarizing optimized bike placement
+
+placement_table_wide <- data.frame(
+  station = names(results$K50$placement),
+  K50 = as.numeric(results$K50$placement),
+  K100 = as.numeric(results$K100$placement),
+  K150 = as.numeric(results$K150$placement))
+print(placement_table_wide)
+
+
+## Plot displaying the number of unhappy individuals vs num bikes
+
+df_unhappy <- lapply(names(results), function(n) {
+  data.frame(
+    k = 1:length(results[[n]]$avg_unhappy),
+    avg_unhappy = results[[n]]$avg_unhappy,
+    fleet_size = n) }) %>% bind_rows()
+
+ggplot(df_unhappy, aes(x = k, y = avg_unhappy, color = fleet_size)) +
+  geom_line() +
+  labs(title = "Unhappy Individuals vs Number of Bikes Added",
+       x = "Number of Bikes Added", y = "Avg Unhappy Customers")
+
+
+## Plot displaying optimized bike placement for different fleet sizes
+
+placement_table_long <- placement_table_wide %>%
+  pivot_longer(cols = c(K50, K100, K150),
+               names_to = "fleet",
+               values_to = "bikes")
+
+ggplot(placement_table_long, aes(x = station, y = bikes, fill = fleet)) +
+  geom_col(position = "dodge") +
+  labs(
+    title = "Bike Placement Across Stations for Each Fleet Size",
+    x = "Station",
+    y = "Bikes Assigned") +
+  theme_minimal(base_size = 14)

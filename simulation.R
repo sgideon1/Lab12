@@ -1,5 +1,7 @@
 #####SIMULATION#################################################################
 
+source("estimation")
+
 ## EXTRACT HOUR
 
 #' @Description Extract hourly mu value for station pairs
