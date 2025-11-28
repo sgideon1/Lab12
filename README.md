@@ -75,6 +75,13 @@ to minimize failures
 
 If you run source("testing.R") and get no errors, the basic logic is working.
 
+--- 
+## Results
+
+The results file consists of final plots and tables produced from the results 
+of the final pipeline. These outputs visually demonstrate the
+optimal bike placement and the number of unhappy customers by fleet size.
+
 ---
 ## Significance
 
