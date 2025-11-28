@@ -17,11 +17,6 @@ Extract_hour <- function(estimates, origin, destination) {
   
   return(rates) }
 
-Extract_hour(arrival_rates, 23, 21) # test
-Extract_hour(arrival_rates, 12, 7) # test
-Extract_hour(arrival_rates, 7, 11) # test
-
-
 ## SIMULATE ONE PAIR
 
 #' @Description Simulates all trips for one station pair
@@ -80,13 +75,6 @@ Sim_station_pair <- function(hourly_rates, origin, destination) {
     origin = rep(origin, length(accepted)),
     destination = rep(destination, length(accepted)))) }
 
-#Sim_station_pair(rep(0, 24), "A", "B") # test for sim_station_pair
-#Sim_station_pair(rep(1, 24), "A", "B")  # test for sim_station_pair
-
-rates_test <- c(0, 0, 10, 0, 0) # testing for lambda max (lambda max = 10 at hr 2)
-Sim_station_pair(rates_test, "A", "B")
-floor(Sim_station_pair(rates_test, "A", "B")$time) # outputs twos
-
 
 ## SIMULATE FULL DAY
 
@@ -111,17 +99,5 @@ arrival_rates <- estimate_arrival_rates(bike_data)
 simulated_day <- Sim_full_day(arrival_rates)
 head(simulated_day)
 
-full_day_test <- data.frame( # test full day simulation, only includes stations 1-3
-  start_station = c(1,1,1,2,2,2),
-  end_station = c(2,2,2,3,3,3),
-  hour = c(0,1,2,0,1,2),
-  mu_hat = c(5,0,5,2,2,2))
-
-sim_test <- Sim_full_day(full_day_test)
-
-# convert time to actual clock times (not seconds), POSIX format
-sim_test$clock <- format(as.POSIXct("2025-01-01 00:00:00") + sim_test$time * 3600,"%H:%M")
-head(sim_test[, c("origin","destination","clock")])
-
-
-
+simulated_day$clock <- format(as.POSIXct("2025-01-01 00:00:00") + simulated_day$time * 3600, "%H:%M")
+head(simulated_day[, c("origin","destination","clock")])
