@@ -3,6 +3,8 @@
 library(dplyr)
 library(tidyr)
 library(lubridate)
+library(ggplot2)
+library(knitr)
 
 #' @Description Estimates hourly arrival rates between bike stations
 #' @param data dataframe with columns start time, end time, start station 

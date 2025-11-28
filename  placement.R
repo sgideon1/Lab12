@@ -1,7 +1,9 @@
 #####OPTIMIZATION###############################################################
 
-source("estimation")
-source("simulation")
+dir.create("results")
+
+source("estimation.R")
+source("simulation.R")
 
 set.seed(123)
 n_days <- 5
@@ -119,7 +121,7 @@ results
 unhappy_summary <- data.frame(
   fleet_size = fleet_sizes,
   avg_unhappy = sapply(results, function(x) tail(x$avg_unhappy, 1)))
-print(unhappy_summary)
+unhappy_summary
 
 ## table summarizing optimized bike placement
 
@@ -128,7 +130,7 @@ placement_table_wide <- data.frame(
   K50 = as.numeric(results$K50$placement),
   K100 = as.numeric(results$K100$placement),
   K150 = as.numeric(results$K150$placement))
-print(placement_table_wide)
+placement_table_wide
 
 
 ## Plot displaying the number of unhappy individuals vs num bikes
@@ -139,7 +141,7 @@ df_unhappy <- lapply(names(results), function(n) {
     avg_unhappy = results[[n]]$avg_unhappy,
     fleet_size = n) }) %>% bind_rows()
 
-ggplot(df_unhappy, aes(x = k, y = avg_unhappy, color = fleet_size)) +
+plot_1 <- ggplot(df_unhappy, aes(x = k, y = avg_unhappy, color = fleet_size)) +
   geom_line() +
   labs(title = "Unhappy Individuals vs Number of Bikes Added",
        x = "Number of Bikes Added", y = "Avg Unhappy Customers")
@@ -152,10 +154,22 @@ placement_table_long <- placement_table_wide %>%
                names_to = "fleet",
                values_to = "bikes")
 
-ggplot(placement_table_long, aes(x = station, y = bikes, fill = fleet)) +
+plot_2 <- ggplot(placement_table_long, aes(x = station, y = bikes, fill = fleet)) +
   geom_col(position = "dodge") +
   labs(
     title = "Bike Placement Across Stations for Each Fleet Size",
     x = "Station",
-    y = "Bikes Assigned") +
-  theme_minimal(base_size = 14)
+    y = "Bikes Assigned")
+
+
+## Export to results file
+png("results/unhappy_summary_table.png", width=200, height=100)
+grid.table(unhappy_summary)
+dev.off()
+
+png("results/placement_table.png", width=900, height=500)
+grid.table(placement_table_wide)
+dev.off()
+
+ggsave(file.path("results", "plot_1.png"), plot = plot_1, width=6, height=4)
+ggsave(file.path("results", "plot_2.png"), plot = plot_2, width=6, height=4)
